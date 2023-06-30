@@ -6,17 +6,17 @@ from pydantic import BaseModel
 
 def apply_strategy(strategy, nums):
     result = None
-    strats={
+    strats = {
         "average": lambda nums: sum(nums) / len(nums),
         "sum": lambda nums: sum(nums),
         "max": lambda nums: max(nums),
         "min": lambda nums: min(nums),
     }
-    
+
     strategy_function = strats.get(strategy, None)
     if strategy_function:
         result = strategy_function(nums)
-    
+
     return result
 
 
@@ -24,7 +24,7 @@ class APIResponse(BaseModel):
     oop_max: int
     stop_loss: int
     deductible: int
-    
+
 
 def get_from_api(url):
     res = None
@@ -45,15 +45,14 @@ def process_data(member_id: int, strategy: str) -> APIResponse:
         try:
             res = get_from_api(f"{url}?member_id={member_id}")
             if res:
-                response_body = APIResponse.parse_obj(res)
+                response_body = APIResponse.model_validate(res)
 
                 for key, value in response_body:
-                    if not key in response_fields:
+                    if key not in response_fields:
                         response_fields[key] = []
-                    
+
                     response_fields[key].append(value)
         except Exception as e:
             raise e
-        
-    return {key: apply_strategy(strategy, value) for key, value in response_fields.items()}
 
+    return {key: apply_strategy(strategy, value) for key, value in response_fields.items()}

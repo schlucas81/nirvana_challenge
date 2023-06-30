@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+
 class GetDataSerializer(serializers.Serializer):
     VALID_STRATEGIES = ['average', 'sum', 'min', 'max']
 
@@ -11,4 +12,4 @@ class GetDataSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 f"Invalid strategy. Please choose from: { ', '.join(self.VALID_STRATEGIES)}. Default strategy for missing argument is 'average'"
             )
-        return value    
+        return value

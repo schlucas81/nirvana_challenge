@@ -5,6 +5,7 @@ from .serializers import GetDataSerializer
 from .helpers import process_data
 from rest_framework import status
 
+
 class GetDataView(ListModelMixin, GenericAPIView):
     serializer_class = GetDataSerializer
 
@@ -16,5 +17,5 @@ class GetDataView(ListModelMixin, GenericAPIView):
         try:
             res = process_data(member_id, strategy)
             return Response(res)
-        except Exception as e:
-            return Response({"error":"Bad Request"}, status=status.HTTP_400_BAD_REQUEST)            
+        except Exception:
+            return Response({"error": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)

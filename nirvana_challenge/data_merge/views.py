@@ -9,6 +9,7 @@ from rest_framework import status
 class GetDataView(ListModelMixin, GenericAPIView):
     serializer_class = GetDataSerializer
 
+    # GET endpoint, requires 'member_id' and optional 'strategy' both validated by serializer
     def get(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)

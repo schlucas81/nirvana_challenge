@@ -1,5 +1,10 @@
 from rest_framework import serializers
 
+"""
+member_id param is required. strategy param is optional, defaults to 'average'; this is 
+where more strategies could be defined and validated.
+"""
+
 
 class GetDataSerializer(serializers.Serializer):
     VALID_STRATEGIES = ['average', 'sum', 'min', 'max']
